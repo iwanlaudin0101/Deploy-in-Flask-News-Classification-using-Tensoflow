@@ -1,0 +1,346 @@
+{% extends "main_layout.html" %}
+{% block title%} {{ title }} {% endblock %}
+
+{% block content %}
+
+<section id="summari" class="summary section-bg">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title" style="margin-top: -50px;">
+            <h2>{{title}}</h2>
+            <p class="text-dark"></p>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Accuracy / Validation Accuracy</h5>
+    
+                        <!-- Line Chart -->
+                        <div id="accuracyChart" class="text-dark"></div>
+    
+                        <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            new ApexCharts(document.querySelector("#accuracyChart"), {
+                            series: [{
+                                name: 'Accuracy',
+                                data: {{ acc|safe }}
+                            }, {
+                                name: 'ValIdastion Accuracy',
+                                data: {{ val_acc|safe }}
+                            }],
+                            chart: {
+                                height: 200,
+                                type: 'area',
+                                toolbar: {
+                                show: false
+                                },
+                            },
+                            markers: {
+                                size: 4
+                            },
+                            colors: ['#4154f1', '#2eca6a'],
+                            fill: {
+                                type: "gradient",
+                                gradient: {
+                                shadeIntensity: 1,
+                                opacityFrom: 0.3,
+                                opacityTo: 0.4,
+                                stops: [0, 90, 100]
+                                }
+                            },
+                            dataLabels: {
+                                enabled: false
+                            },
+                            stroke: {
+                                curve: 'smooth',
+                                width: 2
+                            },
+                            xaxis: {
+                                type: 'Epoch',
+                                categories: {{ epoch|safe }}
+                            },
+                            tooltip: {
+                                x: {
+                                format: 'index'
+                                },
+                            }
+                            }).render();
+                        });
+                        </script>
+                        <!-- End Line Chart -->
+    
+                    </div>
+    
+                </div>
+            </div><!-- End Reports -->
+
+            <div class="col-sm-6">
+                <div class="card shadow-sm">
+    
+                    <div class="card-body">
+                        <h5 class="card-title">Loss / Validation Loss</h5>
+    
+                        <!-- Line Chart -->
+                        <div id="lossChart" class="text-dark"></div>
+    
+                        <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            new ApexCharts(document.querySelector("#lossChart"), {
+                            series: [{
+                                name: 'Loss',
+                                data: {{ loss|safe }}
+                            },
+                            {
+                                name: 'ValIdastion Loss',
+                                data: {{ val_loss|safe }}
+                            }],
+                            chart: {
+                                height: 200,
+                                type: 'area',
+                                toolbar: {
+                                show: false
+                                },
+                            },
+                            markers: {
+                                size: 4
+                            },
+                            colors: ['#f02222', '#4154f1'],
+                            fill: {
+                                type: "gradient",
+                                gradient: {
+                                shadeIntensity: 1,
+                                opacityFrom: 0.3,
+                                opacityTo: 0.4,
+                                stops: [0, 90, 100]
+                                }
+                            },
+                            dataLabels: {
+                                enabled: false
+                            },
+                            stroke: {
+                                curve: 'smooth',
+                                width: 2
+                            },
+                            xaxis: {
+                                type: 'Epoch',
+                                categories: {{ epoch|safe}}
+                            },
+                            tooltip: {
+                                x: {
+                                format: 'index'
+                                },
+                            }
+                            }).render();
+                        });
+                        </script>
+                        <!-- End Line Chart -->
+    
+                    </div>
+    
+                </div>
+            </div><!-- End Reports -->
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h5 class="card-title">Precission Presentation</h5>
+        
+                      <!-- Radial Bar Chart -->
+                      <div id="precisionBarChart"></div>
+        
+                      <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                          new ApexCharts(document.querySelector("#precisionBarChart"), {
+                            series: [84, 98, 86, 84, 97],
+                            chart: {
+                              height: 250,
+                              type: 'radialBar',
+                              toolbar: {
+                                show: true
+                              }
+                            },
+                            plotOptions: {
+                              radialBar: {
+                                dataLabels: {
+                                  name: {
+                                    fontSize: '22px',
+                                  },
+                                  value: {
+                                    fontSize: '16px',
+                                  },
+                                  total: {
+                                    show: true,
+                                    label: 'Averange',
+                                    formatter: function(w) {
+                                      // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                                      return 90 + "%"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            labels: ['Hiburan', 'Olahraga', 'Showbiz', 'Tajuk Utama', 'Teknologi'],
+                          }).render();
+                        });
+                      </script>
+                      <!-- End Radial Bar Chart -->
+        
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h5 class="card-title">Recall Presentation</h5>
+        
+                      <!-- Radial Bar Chart -->
+                      <div id="recallBarChart"></div>
+        
+                      <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                          new ApexCharts(document.querySelector("#recallBarChart"), {
+                            series: [82, 98, 93, 87, 90],
+                            chart: {
+                              height: 250,
+                              type: 'radialBar',
+                              toolbar: {
+                                show: true
+                              }
+                            },
+                            plotOptions: {
+                              radialBar: {
+                                dataLabels: {
+                                  name: {
+                                    fontSize: '22px',
+                                  },
+                                  value: {
+                                    fontSize: '16px',
+                                  },
+                                  total: {
+                                    show: true,
+                                    label: 'Averange',
+                                    formatter: function(w) {
+                                      // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                                      return 90 + "%"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            labels: ['Hiburan', 'Olahraga', 'Showbiz', 'Tajuk Utama', 'Teknologi'],
+                          }).render();
+                        });
+                      </script>
+                      <!-- End Radial Bar Chart -->
+        
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h5 class="card-title">F-Measure Presentation</h5>
+        
+                      <!-- Radial Bar Chart -->
+                      <div id="fmeasureBarChart"></div>
+        
+                      <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                          new ApexCharts(document.querySelector("#fmeasureBarChart"), {
+                            series: [83, 98, 90, 85, 93],
+                            chart: {
+                              height: 250,
+                              type: 'radialBar',
+                              toolbar: {
+                                show: true
+                              }
+                            },
+                            plotOptions: {
+                              radialBar: {
+                                dataLabels: {
+                                  name: {
+                                    fontSize: '22px',
+                                  },
+                                  value: {
+                                    fontSize: '16px',
+                                  },
+                                  total: {
+                                    show: true,
+                                    label: 'Averange',
+                                    formatter: function(w) {
+                                      // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                                      return 90 + "%"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            labels: ['Hiburan', 'Olahraga', 'Showbiz', 'Tajuk Utama', 'Teknologi'],
+                          }).render();
+                        });
+                      </script>
+                      <!-- End Radial Bar Chart -->
+        
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h5 class="card-title">Accuracy Presentation</h5>
+        
+                      <!-- Radial Bar Chart -->
+                      <div id="accuracyBarChart"></div>
+        
+                      <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                          new ApexCharts(document.querySelector("#accuracyBarChart"), {
+                            series: [91],
+                            chart: {
+                              height: 250,
+                              type: 'radialBar',
+                              toolbar: {
+                                show: true
+                              }
+                            },
+                            plotOptions: {
+                              radialBar: {
+                                dataLabels: {
+                                  name: {
+                                    fontSize: '22px',
+                                  },
+                                  value: {
+                                    fontSize: '16px',
+                                  },
+                                  total: {
+                                    show: true,
+                                    label: 'Accuracy',
+                                    formatter: function(w) {
+                                      // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+                                      return 91 + "%"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            labels: ['Accuracy'],
+                          }).render();
+                        });
+                      </script>
+                      <!-- End Radial Bar Chart -->
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <a href="{{ url_for('auth.home') }}"><i class="bi bi-arrow-left-circle"></i> Back to Home</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
